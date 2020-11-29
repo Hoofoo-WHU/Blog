@@ -1,0 +1,824 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="152x152">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="120x120">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="76x76">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="60x60">
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="AUsnpJKRCE">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="前端,CSS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hoofoo's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/favicon-32.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="最近我也做了个网易云移动端，我打算用像素级还原的方式练练手，前面的布局一路顺风顺水，但是当到了footer就是和原网页差了一像素，我在footer中怎么找也找不出任何问题，最终发现是上面图片的锅，这篇博客就来记录一下遇到这个问题。">
+<meta name="keywords" content="前端,CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS像素级还原设计中的33.3%">
+<meta property="og:url" content="http://hoofoo-whu.github.io/article/2019-01-15/CSS像素级还原设计中的33-3.html">
+<meta property="og:site_name" content="Hoofoo&#39;s Blog">
+<meta property="og:description" content="最近我也做了个网易云移动端，我打算用像素级还原的方式练练手，前面的布局一路顺风顺水，但是当到了footer就是和原网页差了一像素，我在footer中怎么找也找不出任何问题，最终发现是上面图片的锅，这篇博客就来记录一下遇到这个问题。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-15-061031.png">
+<meta property="og:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-15-1547535326665.jpg">
+<meta property="og:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-15-145823.png">
+<meta property="og:updated_time" content="2020-11-29T10:16:15.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS像素级还原设计中的33.3%">
+<meta name="twitter:description" content="最近我也做了个网易云移动端，我打算用像素级还原的方式练练手，前面的布局一路顺风顺水，但是当到了footer就是和原网页差了一像素，我在footer中怎么找也找不出任何问题，最终发现是上面图片的锅，这篇博客就来记录一下遇到这个问题。">
+<meta name="twitter:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-15-061031.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://hoofoo-whu.github.io/article/2019-01-15/CSS像素级还原设计中的33-3.html">
+ 
+
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+
+  <title> CSS像素级还原设计中的33.3% | Hoofoo's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      
+      <span class="site-title">Hoofoo's Blog</span>
+      
+    </a>
+  </div>
+  <p class="site-subtitle">華方，兆火鳥也。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CSS像素级还原设计中的33.3%
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+            <span class="post-meta-item-text"></span>
+            <time itemprop="dateCreated" datetime="2019-01-15T13:32:38+00:00" content="2019-01-15">
+              2019-01-15
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+
+
+          
+
+          
+          
+             <span id="/article/2019-01-15/CSS像素级还原设计中的33-3.html" class="leancloud_visitors" data-flag-title="CSS像素级还原设计中的33.3%">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">热度</span>
+               <span class="leancloud-visitors-count"></span>
+               ℃
+
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近我也做了个网易云移动端，我打算用像素级还原的方式练练手，前面的布局一路顺风顺水，但是当到了footer就是和原网页差了一像素，我在footer中怎么找也找不出任何问题，最终发现是上面图片的锅，这篇博客就来记录一下遇到这个问题。<br><a id="more"></a></p>
+<h1 id="等宽布局"><a href="#等宽布局" class="headerlink" title="等宽布局"></a>等宽布局</h1><p>CSS中没有分数的设定，导致我们在需要<code>1/3</code>的时候只能使用<code>33.3%</code>来表示，这在等宽布局的时候就会出现问题，由于剩余了<code>0.1%</code>的宽度，这在<code>1000px</code>宽度以内的网页没有任何影响，因为不足<code>1px</code>显示器会忽略掉这多余的<code>0.1%</code>，当高于<code>1000px</code>就会出现缝隙，当然我们可以<code>33.33%</code>毕竟8K屏的宽度也只有<code>7680px</code>宽，因为<strong>移动端</strong>的宽度低，通常<code>33.3%</code>就基本观察不到了区别了</p>
+<h1 id="等比例块"><a href="#等比例块" class="headerlink" title="等比例块"></a>等比例块</h1><p>CSS中最常用且兼容性最好的等比例方式是使用百分比<code>padding</code>，因为<code>padding</code>的百分比是根据宽度来计算的，这样当宽度改变时，高度就会等比例的改变，这中方式在<strong>移动端</strong>非常常见。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 自适应方块 */</span></span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">	<span class="attribute">padding-bottom</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="等宽布局遇上等比例块"><a href="#等宽布局遇上等比例块" class="headerlink" title="等宽布局遇上等比例块"></a>等宽布局遇上等比例块</h1><p>等宽布局与等比例块在单独使用的时候都没有什么问题，也可以做到设计稿的像素级还原，但两者相遇就会出现莫名其妙的偏移，如果只是靠像素级的调整来解决偏移问题，那么在不同分辨率下的显示就会出现像素级的偏差。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.parent</span>&#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">33.3%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.child</span>&#123;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">	<span class="attribute">padding-bottom</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码的父元素，占屏宽的<code>33.3%</code>他在我的手机上就是占<code>1/3</code>一点缝隙都没有，子元素也是一个方方正正的方形，网易云音乐移动页面的推荐歌单模块也是如此实现的<br><img src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-15-061031.png" alt="网易云音乐"></p>
+<p>一切都看起来如此的美好，但当真是如此吗？</p>
+<p>原网页的图片大小：<br><img src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-15-1547535326665.jpg" alt="网易的网页"><br>我的网页的图片大小：<br><img src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-15-145823.png" alt="我的网页"></p>
+<p>我使用的<code>grid-template-columns: 1fr 1fr 1fr;</code>进行的均分，而原网页使用的<code>width: 33.3%</code>，这导致了我两者图片的细微的高度差异，而且当前模块还肉眼不可见。回到最开始我提到还原稿差得那一像素，当等宽布局时屏幕宽度就那么宽，但是当等宽遇到了等高，高度的积累就不止一个屏幕的宽度了，就是积累的多个<code>0.11px</code>像素爆发了小宇宙变成了<code>1px</code>让眼睛可以观察到，导致了我<code>footer</code>中的内容被挤压而在<code>footer</code>中找不到任何原因</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>尽量不要使用<code>width: 33.3%</code>、<code>width:33.3vw</code>这种写法，使用的时候最好多加几个3，误差会小一点，如果是现代浏览器，能用<code>flex</code>和<code>grid</code>就尽量不要用百分比<code>width</code></p>
+
+        
+        	<br>
+          <blockquote><p>本文链接：<a href="/article/2019-01-15/CSS像素级还原设计中的33-3.html" target="_blank">CSS像素级还原设计中的33.3%</a><br>版权声明：本文章采用<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" rel="external nofollow noopener noreferrer">CC BY-NC-SA 3.0 CN</a>许可协议进行许可。转载请注明出处！</p>
+          </blockquote>
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/CSS/" rel="tag">#CSS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/article/2019-01-15/解决overflow在flex和grid布局中失效.html" rel="next" title="解决overflow在flex和grid布局中失效">
+                <i class="fa fa-chevron-left"></i> 解决overflow在flex和grid布局中失效
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="gitalk-container"></div>
+      <script>
+        (function (){
+          function render(){
+            var gitalk = new Gitalk({
+              clientID: "c15a3993cd6aa1ef4b76",
+              clientSecret: "496f1466f3780b6543b7c8da95b15ef51752f0d5",
+              repo: "hoofoo-whu.github.io",
+              owner: "Hoofoo-WHU",
+              admin: ["Hoofoo-WHU"],
+              id: "article/2019-01-15/CSS像素级还原设计中的33-3.html",      // Ensure uniqueness and length less than 50
+              distractionFreeMode: false  // Facebook-like distraction free mode
+            })
+            gitalk.render('gitalk-container')
+          }
+          window.addEventListener('load', render)
+        })()
+      </script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/hoofoo-avatar.png" alt="華方">
+          <p class="site-author-name" itemprop="name">華方</p>
+          <p class="site-description motion-element" itemprop="description">華方，兆火鳥也。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Hoofoo-WHU" target="_blank" title="GitHub" rel="external nofollow noopener noreferrer">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://coding.net/u/hoofoo" target="_blank" title="Coding" rel="external nofollow noopener noreferrer">
+                  
+                  Coding
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/ba543a06791e/timeline" target="_blank" title="简书" rel="external nofollow noopener noreferrer">
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#等宽布局"><span class="nav-number">1.</span> <span class="nav-text">等宽布局</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#等比例块"><span class="nav-number">2.</span> <span class="nav-text">等比例块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#等宽布局遇上等比例块"><span class="nav-number">3.</span> <span class="nav-text">等宽布局遇上等比例块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-cloud"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">華方</span>
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">
+    NexT
+  </a>
+</div>
+
+<div class="blogrolls">
+  <a class="blogrolls-link" href="/blogrolls">友情链接</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("voqcQzWBmN1PdHl2yhOvDbR0-gzGzoHsz", "t78z9ML7GYBHwdvmjuFWTpN3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  
+
+</body>
+</html>

@@ -1,0 +1,893 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="152x152">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="120x120">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="76x76">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="60x60">
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="AUsnpJKRCE">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="前端,CSS,JavaScript,Next,Mob,HTML,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hoofoo's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/favicon-32.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="博客开通以来，最让我不满意的地方就是社会化分享组件，因为 Next 内置的几个都不是很好用，唯一让我满意的 addthis 对中文又不友好而且速度慢，其他的尽管已经尽力的去修改不满意的地方，不支持 @2x 尺寸图标的问题还是不好解决，因为实在是不好找到成套的合适图标，自己绘制又嫌麻烦，所以就一直搁置着这个问题。不过很多事情都是机缘巧合的，不经意间就发现了 Mob 的分享插件，质量高出其他的不少，下">
+<meta name="keywords" content="前端,CSS,JavaScript,Next,Mob,HTML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为Next集成Mob分享组件">
+<meta property="og:url" content="http://hoofoo-whu.github.io/article/2016-11-12/为Next集成Mob分享组件.html">
+<meta property="og:site_name" content="Hoofoo&#39;s Blog">
+<meta property="og:description" content="博客开通以来，最让我不满意的地方就是社会化分享组件，因为 Next 内置的几个都不是很好用，唯一让我满意的 addthis 对中文又不友好而且速度慢，其他的尽管已经尽力的去修改不满意的地方，不支持 @2x 尺寸图标的问题还是不好解决，因为实在是不好找到成套的合适图标，自己绘制又嫌麻烦，所以就一直搁置着这个问题。不过很多事情都是机缘巧合的，不经意间就发现了 Mob 的分享插件，质量高出其他的不少，下">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/20161112001.png">
+<meta property="og:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/20161112002.png">
+<meta property="og:updated_time" content="2020-11-29T10:16:15.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为Next集成Mob分享组件">
+<meta name="twitter:description" content="博客开通以来，最让我不满意的地方就是社会化分享组件，因为 Next 内置的几个都不是很好用，唯一让我满意的 addthis 对中文又不友好而且速度慢，其他的尽管已经尽力的去修改不满意的地方，不支持 @2x 尺寸图标的问题还是不好解决，因为实在是不好找到成套的合适图标，自己绘制又嫌麻烦，所以就一直搁置着这个问题。不过很多事情都是机缘巧合的，不经意间就发现了 Mob 的分享插件，质量高出其他的不少，下">
+<meta name="twitter:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/20161112001.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://hoofoo-whu.github.io/article/2016-11-12/为Next集成Mob分享组件.html">
+ 
+
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+
+  <title> 为Next集成Mob分享组件 | Hoofoo's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      
+      <span class="site-title">Hoofoo's Blog</span>
+      
+    </a>
+  </div>
+  <p class="site-subtitle">華方，兆火鳥也。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                为Next集成Mob分享组件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+            <span class="post-meta-item-text"></span>
+            <time itemprop="dateCreated" datetime="2016-11-12T02:32:00+00:00" content="2016-11-12">
+              2016-11-12
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+
+
+          
+
+          
+          
+             <span id="/article/2016-11-12/为Next集成Mob分享组件.html" class="leancloud_visitors" data-flag-title="为Next集成Mob分享组件">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">热度</span>
+               <span class="leancloud-visitors-count"></span>
+               ℃
+
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>博客开通以来，最让我不满意的地方就是社会化分享组件，因为 <code>Next</code> 内置的几个都不是很好用，唯一让我满意的 <code>addthis</code> 对中文又不友好而且速度慢，其他的尽管已经尽力的去修改不满意的地方，不支持 <code>@2x</code> 尺寸图标的问题还是不好解决，因为实在是不好找到成套的合适图标，自己绘制又嫌麻烦，所以就一直搁置着这个问题。不过很多事情都是机缘巧合的，不经意间就发现了 <a href="http://www.mob.com" rel="external nofollow noopener noreferrer" target="_blank">Mob</a> 的分享插件，质量高出其他的不少，下面就分享一下我在 <code>Next</code> 主题配置和美化 <a href="http://www.mob.com" rel="external nofollow noopener noreferrer" target="_blank">Mob</a> 分享插件的过程。<br><a id="more"></a></p>
+<h2 id="配置插件"><a href="#配置插件" class="headerlink" title="配置插件"></a>配置插件</h2><p>配置 <a href="http://www.mob.com" rel="external nofollow noopener noreferrer" target="_blank">Mob</a> 分享组件非常简单，只需要获取一个 <code>AppKey</code> 然后将 <code>Mob</code> 提供的代码复制到网页中即可，<a href="http://wiki.mob.com/sharesdk-for-web快速集成/" rel="external nofollow noopener noreferrer" target="_blank">文档</a> 也比较详细，具体的插件设置等可以直接在 <a href="http://wiki.mob.com/sharesdk-for-web快速集成/" rel="external nofollow noopener noreferrer" target="_blank">文档</a> 中看。</p>
+<h3 id="获取-AppKey"><a href="#获取-AppKey" class="headerlink" title="获取 AppKey"></a>获取 AppKey</h3><ul>
+<li>在 <a href="http://www.mob.com" rel="external nofollow noopener noreferrer" target="_blank">Mob</a> 注册账号后，点击头像进入后台，选择 <code>shareSDK</code> 添加一个 <code>Web应用</code> ，如下图：</li>
+</ul>
+<p><img src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/20161112001.png" width="600px" style="margin: 0 auto;">   </p>
+<ul>
+<li>添加后就可以看到自己 <code>AppKey</code> 了，如下图：</li>
+</ul>
+<p><img src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/20161112002.png" width="600px" style="margin: 0 auto;"></p>
+<h3 id="在-Next-中配置"><a href="#在-Next-中配置" class="headerlink" title="在 Next 中配置"></a>在 Next 中配置</h3><p><code>Next</code> 采用的是 <code>Swig</code> 模板引擎，模板引擎可以理解为把网页分解成一个个模块，最后再组合到一起，可以起到复用代码、简化工程的作用。我们需要做的就是找到 <code>Next</code> 的分享模块位置，添加上 <code>Mob</code> 的提供的代码就好了。</p>
+<h4 id="修改-Next-配置文件"><a href="#修改-Next-配置文件" class="headerlink" title="修改 Next 配置文件"></a>修改 Next 配置文件</h4><p>考虑到分享模块的可控性，首先需要在 <code>Next</code> 的配置文件中添加 <code>Mob</code> 的相关参数，配置文件路径为：</p>
+<blockquote>
+<p>your-blog-path/themes/next/_config.yml</p>
+</blockquote>
+<p>找到配置文件中分享模块部分：</p>
+ <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Baidu Share</span></span><br><span class="line"><span class="comment"># Available value:</span></span><br><span class="line"><span class="comment">#    button | slide</span></span><br><span class="line"><span class="comment"># baidushare:</span></span><br><span class="line"><span class="comment">##  type: button </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Share</span></span><br><span class="line"><span class="comment"># jiathis:</span></span><br><span class="line"><span class="comment"># add_this_id:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Share</span></span><br><span class="line"><span class="attr">duoshuo_share:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>将上述代码注释或    改为 <code>false</code> ，在后面添加下面的代码（注意缩进），<code>appkey</code> 修改为之前获取的 <code>appkey</code> 。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Share</span></span><br><span class="line"><span class="attr">mob_share:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">appkey:</span> <span class="string">********</span></span><br></pre></td></tr></table></figure>
+<p>现在就可以通过修改配置文件轻松的打开关闭以及修改mob_share的参数了。</p>
+<h4 id="添加-Mob-模块"><a href="#添加-Mob-模块" class="headerlink" title="添加 Mob 模块"></a>添加 Mob 模块</h4><p><code>Next</code> 中的分享模块都存在下面的路径中：</p>
+<blockquote>
+<p>your-blog-path/themes/next/layout/_partials/share/</p>
+</blockquote>
+<p>在其中新建名为 <code>mob_share.swig</code> 的文件，内容为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--MOB SHARE BEGIN--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-ui-button -mob-share-open"</span>&gt;</span>分享<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-ui"</span> <span class="attr">style</span>=<span class="string">"display: none"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"-mob-share-list"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-weibo"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>新浪微博<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-weixin"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>微信<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-qzone"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>QQ空间<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-qq"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>QQ好友<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-tencentweibo"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>腾讯微博<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-renren"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>人人网<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-kaixin"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>开心网<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-douban"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>豆瓣<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-youdao"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>有道云笔记<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-mingdao"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>明道<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-pengyou"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>朋友网<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-facebook"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Facebook<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-twitter"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Twitter<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-pocket"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Pocket<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-google"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Google+<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-tumblr"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Tumblr<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-instapaper"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Instapaper<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-linkedin"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Linkedin<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-close"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-ui-bg"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"-mob-share"</span> <span class="attr">src</span>=<span class="string">"http://f1.webshare.mob.com/code/mob-share.js?appkey=&#123;&#123;theme.mob_share.appkey&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--MOB SHARE END--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上述代码包括了 <code>Mob</code> 支持的所有社交软件，根据需要自行删除或修改顺序，当然也可以添加其他想要添加的东西。</p>
+<h4 id="添加引用"><a href="#添加引用" class="headerlink" title="添加引用"></a>添加引用</h4><p>现在只是声明了模块，使其生效需要在文章模块中引入，打开文章模块：</p>
+<blockquote>
+<p> your-blog-path/themes/next/layout/post.swig</p>
+</blockquote>
+<p>修改如下部分：</p>
+<ul>
+<li><p>修改前</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.jiathis %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/jiathis.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">elseif</span> theme.baidushare %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/baidushare.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">elseif</span> theme.add_this_id %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/add-this.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">elseif</span> theme.duoshuo_shortname <span class="keyword">and</span> theme.duoshuo_share %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/duoshuo_share.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">endif</span> %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改后</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.jiathis %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/jiathis.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">elseif</span> theme.baidushare %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/baidushare.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">elseif</span> theme.add_this_id %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/add-this.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">elseif</span> theme.duoshuo_shortname <span class="keyword">and</span> theme.duoshuo_share %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/duoshuo_share.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">elseif</span> theme.mob_share.enable %&#125;</span><br><span class="line">  &#123;% <span class="keyword">include</span> <span class="string">'_partials/share/mob_share.swig'</span> %&#125;</span><br><span class="line">&#123;% <span class="keyword">endif</span> %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>现在，重新生成发布博客 <code>Mob</code> 分享插件就出现在文章后面了。</p>
+<h3 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h3><p>经过上述配置，插件应该已经可以跑起来了，但是还是有一些细节与 <code>Next</code> 不搭配，有前端经验的人可以试着修改成自己喜欢的外观。</p>
+<h4 id="添加-Mob-样式文件"><a href="#添加-Mob-样式文件" class="headerlink" title="添加 Mob 样式文件"></a>添加 Mob 样式文件</h4><p><code>Next</code> 样式使用的 <code>Stylus</code> 进行预处理，可以算是扩展版的 <code>CSS</code> ，很容易上手。<br>在下面目录中添加 <code>mob_share.styl</code> 样式文件。</p>
+<blockquote>
+<p>your-blog-path/themes/next/source/css/_common/components/third-party/</p>
+</blockquote>
+<h4 id="添加引用-1"><a href="#添加引用-1" class="headerlink" title="添加引用"></a>添加引用</h4><p>在同一目录下的 <code>third-party.styl</code> 中添加：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">"mob_share"</span>;</span><br></pre></td></tr></table></figure>
+<p>现在就可以在 <code>mob_share.styl</code> 中愉快的写想要的样式了。<br>通过浏览器 <code>审查元素</code> 找到需要修改的 <code>class</code> 把想要的写在样式文件中就好了。</p>
+<h3 id="脚本控制"><a href="#脚本控制" class="headerlink" title="脚本控制"></a>脚本控制</h3><h4 id="添加-Mob-脚本文件"><a href="#添加-Mob-脚本文件" class="headerlink" title="添加 Mob 脚本文件"></a>添加 Mob 脚本文件</h4><p>毕竟 <code>CSS3</code> 能做的有限，为了完善插件，加入 <code>JavaScript</code> 就能更加深度的定制了。<br><code>Next</code> 第三方插件的 <code>JavaScript</code> 存在下面的路径里。</p>
+<blockquote>
+<p>your-blog-path/themes/next/layout/_scripts/third-party/</p>
+</blockquote>
+<p>在其中添加新文件 <code>mob_share.swig</code> ，内容为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.mob_share.enable %&#125;</span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"><span class="comment">//enter your code</span></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&#123;% <span class="keyword">endif</span> %&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="添加引用-2"><a href="#添加引用-2" class="headerlink" title="添加引用"></a>添加引用</h4><p>打开 <code>_layout</code> 文件，路径为：</p>
+<blockquote>
+<p>your-blog-path/themes/next/layout/_layout.swig</p>
+</blockquote>
+<p>在 <code>body</code> 的最后添加下面的代码来引入 <code>mob_share.swig</code>。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">include</span> <span class="string">'_scripts/third-party/mob_share.swig'</span> %&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就可以在 <code>mob_share.swig</code> 愉快地写各种事件控制插件了。</p>
+<h2 id="代码分享"><a href="#代码分享" class="headerlink" title="代码分享"></a>代码分享</h2><p>由于修改比较多就不细说了，拿出本站现在的 <code>Mob</code> 模块的代码作为参考。</p>
+<h3 id="模块部分"><a href="#模块部分" class="headerlink" title="模块部分"></a>模块部分</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--MOB SHARE BEGIN--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-hoofoo-share-title"</span>&gt;</span>分享到：<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-hoofoo-share-buttons"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-weibo -hoofoo-share-weibo -hoofoo-share-ui-button"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-weibo"</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-weixin -hoofoo-share-weixin -hoofoo-share-ui-button"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-weixin"</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-twitter -hoofoo-share-twitter -hoofoo-share-ui-button"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-twitter"</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-hoofoo-share-more -hoofoo-share-ui-button -mob-share-open"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-ellipsis-h"</span> <span class="attr">aria-hidden</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-ui"</span> <span class="attr">style</span>=<span class="string">"display: none"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"-mob-share-list"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-weibo"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>新浪微博<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-weixin"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>微信<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-qzone"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>QQ空间<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-qq"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>QQ好友<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-tencentweibo"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>腾讯微博<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-renren"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>人人网<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-kaixin"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>开心网<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-douban"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>豆瓣<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-youdao"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>有道云笔记<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-mingdao"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>明道<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-pengyou"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>朋友网<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-facebook"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Facebook<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-twitter"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Twitter<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-pocket"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Pocket<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-google"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Google+<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-tumblr"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Tumblr<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-instapaper"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Instapaper<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"-mob-share-linkedin"</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>Linkedin<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-close"</span>&gt;</span>取消<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"-mob-share-ui-bg"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">"-mob-share"</span> <span class="attr">src</span>=<span class="string">"http://f1.webshare.mob.com/code/mob-share.js?appkey=&#123;&#123;theme.mob_share.appkey&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--MOB SHARE END--&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="样式部分"><a href="#样式部分" class="headerlink" title="样式部分"></a>样式部分</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">.-hoofoo-share-buttons&#123;</span><br><span class="line">	<span class="attribute">display</span>: inline-block;</span><br><span class="line">&#125;</span><br><span class="line">.-hoofoo-share-title&#123;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">1.1em</span>;</span><br><span class="line">	<span class="attribute">font-weight</span>: <span class="number">200</span>;</span><br><span class="line">&#125;</span><br><span class="line">.-hoofoo-share-ui-button&#123;</span><br><span class="line">	<span class="attribute">cursor</span>: pointer;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#555</span>;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">24px</span>;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">40px</span>;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">40px</span>;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">40px</span>;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">10px</span>;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">25px</span>;</span><br><span class="line">	<span class="attribute">float</span>: left;</span><br><span class="line">	<span class="attribute">transition</span>: background <span class="number">0.4s</span>;</span><br><span class="line">	-moz-<span class="attribute">transition</span>: background <span class="number">0.4s</span>;	<span class="comment">/* Firefox 4 */</span></span><br><span class="line">	-webkit-<span class="attribute">transition</span>: background <span class="number">0.4s</span>;	<span class="comment">/* Safari 和 Chrome */</span></span><br><span class="line">	-o-<span class="attribute">transition</span>: background <span class="number">0.4s</span>;</span><br><span class="line">&#125;</span><br><span class="line">.-hoofoo-share-weibo:hover&#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#cf3f41</span>;</span><br><span class="line">&#125;</span><br><span class="line">.-hoofoo-share-weixin:hover&#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#18a01a</span>;</span><br><span class="line">&#125;</span><br><span class="line">.-hoofoo-share-twitter:hover&#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#2ab3e6</span>;</span><br><span class="line">&#125;</span><br><span class="line">.-hoofoo-share-more:hover&#123;</span><br><span class="line">	<span class="attribute">background-color</span>: <span class="number">#777</span>;</span><br><span class="line">&#125;</span><br><span class="line">.-mob-share-weixin-qrcode-<span class="attribute">content</span>&#123;</span><br><span class="line">	<span class="attribute">border-radius</span>: <span class="number">4px</span>;</span><br><span class="line">	-webkit-<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">10px</span> <span class="number">25px</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span><br><span class="line">	-moz-<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">10px</span> <span class="number">25px</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span><br><span class="line">	-o-<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">10px</span> <span class="number">25px</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span><br><span class="line">	<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">10px</span> <span class="number">25px</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span><br><span class="line">&#125;</span><br><span class="line">.-mob-share-weixin-qrcode&#123;</span><br><span class="line">	<span class="attribute">margin</span>: <span class="number">5%</span> !important;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">90%</span> !important;</span><br><span class="line">	<span class="attribute">height</span>: auto !important;</span><br><span class="line">&#125;</span><br><span class="line">.-mob-share-weixin-qrcode-close &#123;</span><br><span class="line">	<span class="attribute">background-image</span>: url(<span class="string">'/lib/fancybox/source/fancybox_sprite.png'</span>) !important;<span class="comment">//因为兼容问题把vendor改成了lib，根据自己的路径修改</span></span><br><span class="line">&#125;</span><br><span class="line">.-mob-share-weixin-qrcode-close &#123;</span><br><span class="line">	<span class="attribute">overflow</span>: hidden;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">100px</span> !important;</span><br><span class="line">	<span class="attribute">position</span>: absolute !important;</span><br><span class="line">	<span class="attribute">top</span>: -<span class="number">18px</span> !important;</span><br><span class="line">	<span class="attribute">right</span>: -<span class="number">18px</span> !important;</span><br><span class="line">	<span class="attribute">width</span>: <span class="number">36px</span> !important;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">36px</span> !important;</span><br><span class="line">	<span class="attribute">cursor</span>: pointer !important;</span><br><span class="line">	<span class="attribute">z-index</span>: <span class="number">8040</span> !important;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*Retina graphics!*/</span></span><br><span class="line">@media only screen and (-webkit-min-device-pixel-ratio: <span class="number">1.5</span>),</span><br><span class="line">	   only screen and (min--moz-device-pixel-ratio: <span class="number">1.5</span>),</span><br><span class="line">	   only screen and (min-device-pixel-ratio: <span class="number">1.5</span>)&#123;</span><br><span class="line">	.-mob-share-weixin-qrcode-close &#123;</span><br><span class="line">		<span class="attribute">background-image</span>: url(<span class="string">'/lib/fancybox/source/fancybox_sprite@2x.png'</span>) !important;<span class="comment">//因为兼容问题把vendor改成了lib，根据自己的路径修改</span></span><br><span class="line">		<span class="attribute">background-size</span>: <span class="number">44px</span> <span class="number">152px</span> !important; <span class="comment">/*The size of the normal image, half the size of the hi-res image*/</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">.-mob-share-close&#123;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">4em</span> !important;</span><br><span class="line">	<span class="attribute">font-size</span>: <span class="number">0.8em</span> !important;</span><br><span class="line">	<span class="attribute">line-height</span>: <span class="number">4em</span> !important;</span><br><span class="line">	<span class="attribute">background</span>: <span class="number">#555</span> !important;</span><br><span class="line">	<span class="attribute">color</span>: <span class="number">#fff</span> !important;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="脚本部分"><a href="#脚本部分" class="headerlink" title="脚本部分"></a>脚本部分</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.mob_share.enable %&#125;</span><br><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line">	<span class="comment">//微信二维码点击背景关闭</span></span><br><span class="line">	$(<span class="string">'body'</span>).delegate(<span class="string">'.-mob-share-weixin-qrcode-bg'</span>,<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"> 		$(<span class="string">".-mob-share-weixin-qrcode-close"</span>).trigger(<span class="string">"click"</span>);</span><br><span class="line">	&#125;); </span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&#123;% endif %&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对自己过于复杂的事情不妨等一等，也许就不经意间遇到了解决的办法，当然可能一直都达不到自己的要求，但是也是在趋近于完善的。当把遇到的都研究一遍之后，就可以吸取百家之长，复杂的事情也许就不会那么复杂了。另求网页调用手机各种 <code>APP</code> 的接口，如果能实现的话就总结起来开一个开源项目。</p>
+
+        
+        	<br>
+          <blockquote><p>本文链接：<a href="/article/2016-11-12/为Next集成Mob分享组件.html" target="_blank">为Next集成Mob分享组件</a><br>版权声明：本文章采用<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" rel="external nofollow noopener noreferrer">CC BY-NC-SA 3.0 CN</a>许可协议进行许可。转载请注明出处！</p>
+          </blockquote>
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/CSS/" rel="tag">#CSS</a>
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+            <a href="/tags/Next/" rel="tag">#Next</a>
+          
+            <a href="/tags/Mob/" rel="tag">#Mob</a>
+          
+            <a href="/tags/HTML/" rel="tag">#HTML</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/article/2016-11-07/大楼轮廓实现及优化.html" rel="next" title="大楼轮廓实现及优化">
+                <i class="fa fa-chevron-left"></i> 大楼轮廓实现及优化
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/article/2016-11-14/删除链表中的元素.html" rel="prev" title="删除链表中的元素">
+                删除链表中的元素 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="gitalk-container"></div>
+      <script>
+        (function (){
+          function render(){
+            var gitalk = new Gitalk({
+              clientID: "c15a3993cd6aa1ef4b76",
+              clientSecret: "496f1466f3780b6543b7c8da95b15ef51752f0d5",
+              repo: "hoofoo-whu.github.io",
+              owner: "Hoofoo-WHU",
+              admin: ["Hoofoo-WHU"],
+              id: "article/2016-11-12/为Next集成Mob分享组件.html",      // Ensure uniqueness and length less than 50
+              distractionFreeMode: false  // Facebook-like distraction free mode
+            })
+            gitalk.render('gitalk-container')
+          }
+          window.addEventListener('load', render)
+        })()
+      </script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/hoofoo-avatar.png" alt="華方">
+          <p class="site-author-name" itemprop="name">華方</p>
+          <p class="site-description motion-element" itemprop="description">華方，兆火鳥也。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Hoofoo-WHU" target="_blank" title="GitHub" rel="external nofollow noopener noreferrer">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://coding.net/u/hoofoo" target="_blank" title="Coding" rel="external nofollow noopener noreferrer">
+                  
+                  Coding
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/ba543a06791e/timeline" target="_blank" title="简书" rel="external nofollow noopener noreferrer">
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置插件"><span class="nav-number">1.</span> <span class="nav-text">配置插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取-AppKey"><span class="nav-number">1.1.</span> <span class="nav-text">获取 AppKey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Next-中配置"><span class="nav-number">1.2.</span> <span class="nav-text">在 Next 中配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-Next-配置文件"><span class="nav-number">1.2.1.</span> <span class="nav-text">修改 Next 配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加-Mob-模块"><span class="nav-number">1.2.2.</span> <span class="nav-text">添加 Mob 模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加引用"><span class="nav-number">1.2.3.</span> <span class="nav-text">添加引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#美化"><span class="nav-number">1.3.</span> <span class="nav-text">美化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加-Mob-样式文件"><span class="nav-number">1.3.1.</span> <span class="nav-text">添加 Mob 样式文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加引用-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">添加引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#脚本控制"><span class="nav-number">1.4.</span> <span class="nav-text">脚本控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加-Mob-脚本文件"><span class="nav-number">1.4.1.</span> <span class="nav-text">添加 Mob 脚本文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加引用-2"><span class="nav-number">1.4.2.</span> <span class="nav-text">添加引用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码分享"><span class="nav-number">2.</span> <span class="nav-text">代码分享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模块部分"><span class="nav-number">2.1.</span> <span class="nav-text">模块部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#样式部分"><span class="nav-number">2.2.</span> <span class="nav-text">样式部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#脚本部分"><span class="nav-number">2.3.</span> <span class="nav-text">脚本部分</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-cloud"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">華方</span>
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">
+    NexT
+  </a>
+</div>
+
+<div class="blogrolls">
+  <a class="blogrolls-link" href="/blogrolls">友情链接</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("voqcQzWBmN1PdHl2yhOvDbR0-gzGzoHsz", "t78z9ML7GYBHwdvmjuFWTpN3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1040 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="152x152">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="120x120">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="76x76">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="60x60">
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="AUsnpJKRCE">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="前端,CSS,布局,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hoofoo's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/favicon-32.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="本文探讨常用的css布局各种实现方式，其中float、position的实现方式兼容性较好，flex、grid兼容性较差甚至各种浏览器有不同的语法，可以通过caniuse搜索查看。">
+<meta name="keywords" content="前端,CSS,布局">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS常用布局">
+<meta property="og:url" content="http://hoofoo-whu.github.io/article/2018-12-25/css-common-layout.html">
+<meta property="og:site_name" content="Hoofoo&#39;s Blog">
+<meta property="og:description" content="本文探讨常用的css布局各种实现方式，其中float、position的实现方式兼容性较好，flex、grid兼容性较差甚至各种浏览器有不同的语法，可以通过caniuse搜索查看。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-29T10:16:15.238Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS常用布局">
+<meta name="twitter:description" content="本文探讨常用的css布局各种实现方式，其中float、position的实现方式兼容性较好，flex、grid兼容性较差甚至各种浏览器有不同的语法，可以通过caniuse搜索查看。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://hoofoo-whu.github.io/article/2018-12-25/css-common-layout.html">
+ 
+
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+
+  <title> CSS常用布局 | Hoofoo's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      
+      <span class="site-title">Hoofoo's Blog</span>
+      
+    </a>
+  </div>
+  <p class="site-subtitle">華方，兆火鳥也。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CSS常用布局
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+            <span class="post-meta-item-text"></span>
+            <time itemprop="dateCreated" datetime="2018-12-25T00:13:50+00:00" content="2018-12-25">
+              2018-12-25
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+
+
+          
+
+          
+          
+             <span id="/article/2018-12-25/css-common-layout.html" class="leancloud_visitors" data-flag-title="CSS常用布局">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">热度</span>
+               <span class="leancloud-visitors-count"></span>
+               ℃
+
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文探讨常用的css布局各种实现方式，其中<code>float</code>、<code>position</code>的实现方式兼容性较好，<code>flex</code>、<code>grid</code>兼容性较差甚至各种浏览器有不同的语法，可以通过<a href="https://caniuse.com/" rel="external nofollow noopener noreferrer" target="_blank">caniuse</a>搜索查看。<br><a id="more"></a></p>
+<h1 id="左右布局"><a href="#左右布局" class="headerlink" title="左右布局"></a>左右布局</h1><h2 id="按比例自适应布局"><a href="#按比例自适应布局" class="headerlink" title="按比例自适应布局"></a>按比例自适应布局</h2><p>按比例自适应布局很少用得到，下面给出的代码都是等比例分两列的，多列不同比例的布局也是使用同样的方法。</p>
+<ol>
+<li>使用float实现<blockquote>
+<p>使用float配合百分比宽度</p>
+</blockquote>
+</li>
+</ol>
+<iframe height="265" scrolling="no" title="vvxvmR" src="//codepen.io/hoofoo-whu/embed/vvxvmR/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/vvxvmR/" rel="external nofollow noopener noreferrer" target="_blank">vvxvmR</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="2">
+<li>使用绝对定位实现<blockquote>
+<p>使用绝对定位<code>left</code>、<code>bottom</code>、<code>top</code>、<code>right</code>定位</p>
+</blockquote>
+</li>
+</ol>
+<iframe height="265" scrolling="no" title="左右按比例布局-绝对定位" src="//codepen.io/hoofoo-whu/embed/pqwRYO/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/pqwRYO/" rel="external nofollow noopener noreferrer" target="_blank">左右按比例布局-绝对定位</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="3">
+<li>使用flex实现</li>
+</ol>
+<blockquote>
+<p>flex项目设置<code>flex-grow</code>在flex容器中自适应宽度</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="左右按比例布局-flex" src="//codepen.io/hoofoo-whu/embed/PXjpOe/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/PXjpOe/" rel="external nofollow noopener noreferrer" target="_blank">左右按比例布局-flex</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="4">
+<li>使用grid实现</li>
+</ol>
+<blockquote>
+<p>定义grid为一行两列<code>1fr</code>即可</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="左右按比例布局-grid" src="//codepen.io/hoofoo-whu/embed/PXjpRa/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/PXjpRa/" rel="external nofollow noopener noreferrer" target="_blank">左右按比例布局-grid</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<h2 id="左固定宽度右自适应布局"><a href="#左固定宽度右自适应布局" class="headerlink" title="左固定宽度右自适应布局"></a>左固定宽度右自适应布局</h2><p>左侧固定宽度是经常使用的布局方式，下面给出的代码都是左侧固定，右侧同理。</p>
+<ol>
+<li>使用float实现<blockquote>
+<p>左侧浮动使用<code>width</code>设置固定宽度，右侧不设置浮动且不清除浮动便会与左侧同行，此时使用<code>margin-left</code>空开左侧的距离即可。</p>
+</blockquote>
+</li>
+</ol>
+<iframe height="265" scrolling="no" title="左固定宽度右自适应布局-float" src="//codepen.io/hoofoo-whu/embed/vvZmZQ/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/vvZmZQ/" rel="external nofollow noopener noreferrer" target="_blank">左固定宽度右自适应布局-float</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="2">
+<li>使用绝对定位实现<blockquote>
+<p>使用绝对定位<code>left</code>、<code>bottom</code>、<code>top</code>、<code>right</code>定位，左侧不设置<code>right</code>使用<code>width</code>固定宽度</p>
+</blockquote>
+</li>
+</ol>
+<iframe height="265" scrolling="no" title="左固定宽度右自适应布局-绝对定位" src="//codepen.io/hoofoo-whu/embed/xmrddp/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/xmrddp/" rel="external nofollow noopener noreferrer" target="_blank">左固定宽度右自适应布局-绝对定位</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="3">
+<li>使用flex实现</li>
+</ol>
+<blockquote>
+<p>flex项目设置<code>flex-grow</code>在flex容器中自适应宽度，如果设置宽度，则不设宽度的均分剩余宽度</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="左固定宽度右自适应布局-flex" src="//codepen.io/hoofoo-whu/embed/EGXmWv/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/EGXmWv/" rel="external nofollow noopener noreferrer" target="_blank">左固定宽度右自适应布局-flex</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="4">
+<li>使用grid实现</li>
+</ol>
+<blockquote>
+<p>定义grid为一行两列分别为<code>50px`</code>1fr`即可</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="左固定宽度右自适应布局-grid" src="//codepen.io/hoofoo-whu/embed/vvZmKz/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/vvZmKz/" rel="external nofollow noopener noreferrer" target="_blank">左固定宽度右自适应布局-grid</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<h1 id="左中右布局"><a href="#左中右布局" class="headerlink" title="左中右布局"></a>左中右布局</h1><h2 id="按比例自适应布局-1"><a href="#按比例自适应布局-1" class="headerlink" title="按比例自适应布局"></a>按比例自适应布局</h2><p>左中右按比例自适应布局很少用得到，其原理与左右布局相同，就不给出代码演示了。</p>
+<h2 id="左右固定中自适应布局"><a href="#左右固定中自适应布局" class="headerlink" title="左右固定中自适应布局"></a>左右固定中自适应布局</h2><p>左右固定经常使用，下面是代码实现方式。</p>
+<ol>
+<li>使用float实现<blockquote>
+<p>左侧左浮动，右侧右浮动，中间不设置浮动且不清除浮动即可，然后设置左右<code>margin</code>避开左右侧内容。一定要注意在HTML中middle要在left和right的后面，否则将挤掉right的空间。</p>
+</blockquote>
+</li>
+</ol>
+<iframe height="265" scrolling="no" title="左右固定中自适应布局-float" src="//codepen.io/hoofoo-whu/embed/XogREe/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/XogREe/" rel="external nofollow noopener noreferrer" target="_blank">左右固定中自适应布局-float</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="2">
+<li>使用绝对定位实现<blockquote>
+<p>使用绝对定位<code>left</code>、<code>bottom</code>、<code>top</code>、<code>right</code>定位，左右使用<code>width</code>设置宽度</p>
+</blockquote>
+</li>
+</ol>
+<iframe height="265" scrolling="no" title="左右固定中自适应布局-绝对定位" src="//codepen.io/hoofoo-whu/embed/dwRWgw/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/dwRWgw/" rel="external nofollow noopener noreferrer" target="_blank">左右固定中自适应布局-绝对定位</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="3">
+<li>使用flex实现</li>
+</ol>
+<blockquote>
+<p>flex项目设置<code>flex-grow</code>在flex容器中自适应宽度，左右侧设置<code>width</code>中间设置<code>flex-grow</code>即可</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="左右固定中自适应布局-flex" src="//codepen.io/hoofoo-whu/embed/GPEmPV/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/GPEmPV/" rel="external nofollow noopener noreferrer" target="_blank">左右固定中自适应布局-flex</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="4">
+<li>使用grid实现</li>
+</ol>
+<blockquote>
+<p>定义grid为一行三列<code>50px 1fr 50px</code>即可，HTML中必须按顺序写，否则需要在css中设置占用的格子</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="左右固定中自适应布局-grid" src="//codepen.io/hoofoo-whu/embed/xmrdBJ/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/xmrdBJ/" rel="external nofollow noopener noreferrer" target="_blank">左右固定中自适应布局-grid</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+
+
+<h1 id="居中"><a href="#居中" class="headerlink" title="居中"></a>居中</h1><p>居中非常非常非常常用，也是面试中的必问题，一定要掌握好。</p>
+<h2 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h2><ol>
+<li>通过text-align实现</li>
+</ol>
+<blockquote>
+<p>行内元素只需要设置text-algin即可，非行内元素可以通过display转换为行内元素，此方法可以多个元素居中</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="行内元素居中" src="//codepen.io/hoofoo-whu/embed/REggNb/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/REggNb/" rel="external nofollow noopener noreferrer" target="_blank">行内元素居中</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="2">
+<li>通过margin实现</li>
+</ol>
+<blockquote>
+<p>块级元素只需要设置<code>margin: 0 auto</code>， 此方法很常用但只可以居中一个元素</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="块级元素居中" src="//codepen.io/hoofoo-whu/embed/MZoowr/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/MZoowr/" rel="external nofollow noopener noreferrer" target="_blank">块级元素居中</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="3">
+<li>通过绝对定位实现</li>
+</ol>
+<blockquote>
+<p>任何种类的元素都可以，通过绝对定位与<code>left:50%</code>，如果是固定宽度的话使用margin负值，如果不固定宽度使用transform:translateX(-50%)即可</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="水平居中-绝对定位" src="//codepen.io/hoofoo-whu/embed/QzggdM/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/QzggdM/" rel="external nofollow noopener noreferrer" target="_blank">水平居中-绝对定位</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="4">
+<li>通过flex实现</li>
+</ol>
+<blockquote>
+<p>可以但没有必要，多个块级元素可以使用，不过一般都通过嵌套实现</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="水平居中-flex" src="//codepen.io/hoofoo-whu/embed/oJwwwK/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/oJwwwK/" rel="external nofollow noopener noreferrer" target="_blank">水平居中-flex</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="5">
+<li>通过grid实现</li>
+</ol>
+<blockquote>
+<p>同上，可以但没必要，而且只可以居中一个元素，多个还需要嵌套</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="水平居中-grid" src="//codepen.io/hoofoo-whu/embed/aPwwLM/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/aPwwLM/" rel="external nofollow noopener noreferrer" target="_blank">水平居中-grid</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><ol>
+<li>通过line-height实现</li>
+</ol>
+<blockquote>
+<p>行内元素只需要设置line-height即可，非行内元素可以通过display转换为行内元素，一定要将父元素的font-size设为0，否则因为不同字体baseline不同的原因可能会跑偏，可以居中多个元素</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="行内元素垂直居中" src="//codepen.io/hoofoo-whu/embed/yGXXKE/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/yGXXKE/" rel="external nofollow noopener noreferrer" target="_blank">行内元素垂直居中</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="2">
+<li>通过绝对定位实现</li>
+</ol>
+<blockquote>
+<p>任何种类的元素都可以，通过绝对定位与<code>top:50%</code>，如果是固定高度的话使用margin负值，如果不固定高度使用transform:translateY(-50%)即可，只可以居中一个元素</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="垂直居中-绝对定位" src="//codepen.io/hoofoo-whu/embed/dwRRgo/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/dwRRgo/" rel="external nofollow noopener noreferrer" target="_blank">垂直居中-绝对定位</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="3">
+<li>通过table实现</li>
+</ol>
+<blockquote>
+<p>table中的行内元素很容易设置居中，多行也可以，不过需要多嵌套一层table-cell</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="垂直居中-table" src="//codepen.io/hoofoo-whu/embed/aPwydz/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/aPwydz/" rel="external nofollow noopener noreferrer" target="_blank">垂直居中-table</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="4">
+<li>通过flex实现</li>
+</ol>
+<blockquote>
+<p>非常好用，只需要设置父元素<code>align-items: center</code>即可，如果多行还可以通过<code>aligin-content: center</code>居中</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="垂直居中-flex" src="//codepen.io/hoofoo-whu/embed/YdQQBq/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/YdQQBq/" rel="external nofollow noopener noreferrer" target="_blank">垂直居中-flex</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<ol start="5">
+<li>通过grid实现</li>
+</ol>
+<blockquote>
+<p>不太推荐，适用于单列或多列元素的居中，没有flex灵活</p>
+</blockquote>
+<iframe height="265" scrolling="no" title="垂直居中-grid" src="//codepen.io/hoofoo-whu/embed/ZVyyNw/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true" style="width: 100%;">See the Pen <a href="https://codepen.io/hoofoo-whu/pen/ZVyyNw/" rel="external nofollow noopener noreferrer" target="_blank">垂直居中-grid</a> by Hoofoo (<a href="https://codepen.io/hoofoo-whu" rel="external nofollow noopener noreferrer" target="_blank">@hoofoo-whu</a>) on <a href="https://codepen.io" rel="external nofollow noopener noreferrer" target="_blank">CodePen</a>.<br></iframe>
+
+<h2 id="水平垂直都居中"><a href="#水平垂直都居中" class="headerlink" title="水平垂直都居中"></a>水平垂直都居中</h2><p>通过水平居中和垂直居中的组合可以实现完全居中，以下各情况都是通过前面提到的方法组合而成，就不给代码演示了。</p>
+<ol>
+<li>line-height与text-align实现</li>
+</ol>
+<blockquote>
+<p>内联元素只需要同时使用line-height垂直居中和text-align水平居中即可，适用于单行多个元素</p>
+</blockquote>
+<ol start="2">
+<li>text-align与table实现</li>
+</ol>
+<blockquote>
+<p>不同于上面的第一种，此种方法可以行内元素多行也保持居中</p>
+</blockquote>
+<ol start="3">
+<li>margin与line-height实现</li>
+</ol>
+<blockquote>
+<p>inline-block可以通过margin水平居中和line-height垂直居中组合，只适用于一个元素的情况，不推荐使用</p>
+</blockquote>
+<ol start="4">
+<li>绝对定位实现</li>
+</ol>
+<blockquote>
+<p>没什么好说的，垂直水平都用绝对定位居中就好了，只适用于一个任何种类元素</p>
+</blockquote>
+<ol start="5">
+<li>flex实现</li>
+</ol>
+<blockquote>
+<p>同上，最灵活的方式居中，可以多个元素甚至可以多行</p>
+</blockquote>
+<ol start="6">
+<li>grid实现</li>
+</ol>
+<blockquote>
+<p>不推荐使用，垂直水平都用grid居中就好了，但只能一个元素居中，兼容性又差</p>
+</blockquote>
+<h1 id="CSS小技巧"><a href="#CSS小技巧" class="headerlink" title="CSS小技巧"></a>CSS小技巧</h1><p>其他的多种小技巧可以通过<a href="https://css-tricks.com" rel="external nofollow noopener noreferrer" target="_blank">css-tricks</a>搜索</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>一种布局是可以通过多种方式实现的，每种布局方式都有各自的优点与缺点，flex、grid虽然简洁好用但兼容性较差适合较晚起步的移动端使用，行内块和绝对定位兼容性好但相对麻烦，居中时有单个元素、多个元素甚至多行的需求可以使用相对简单的方式来解决，较老的平台为了兼容性问题则可以使用嵌套的形式来布局。</p>
+
+        
+        	<br>
+          <blockquote><p>本文链接：<a href="/article/2018-12-25/css-common-layout.html" target="_blank">CSS常用布局</a><br>版权声明：本文章采用<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" rel="external nofollow noopener noreferrer">CC BY-NC-SA 3.0 CN</a>许可协议进行许可。转载请注明出处！</p>
+          </blockquote>
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/CSS/" rel="tag">#CSS</a>
+          
+            <a href="/tags/布局/" rel="tag">#布局</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/article/2017-06-10/JavaScript陷阱之sort.html" rel="next" title="JavaScript陷阱之sort">
+                <i class="fa fa-chevron-left"></i> JavaScript陷阱之sort
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/article/2018-12-29/javascript-trans-type.html" rel="prev" title="JavaScript中的类型转换">
+                JavaScript中的类型转换 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="gitalk-container"></div>
+      <script>
+        (function (){
+          function render(){
+            var gitalk = new Gitalk({
+              clientID: "c15a3993cd6aa1ef4b76",
+              clientSecret: "496f1466f3780b6543b7c8da95b15ef51752f0d5",
+              repo: "hoofoo-whu.github.io",
+              owner: "Hoofoo-WHU",
+              admin: ["Hoofoo-WHU"],
+              id: "article/2018-12-25/css-common-layout.html",      // Ensure uniqueness and length less than 50
+              distractionFreeMode: false  // Facebook-like distraction free mode
+            })
+            gitalk.render('gitalk-container')
+          }
+          window.addEventListener('load', render)
+        })()
+      </script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/hoofoo-avatar.png" alt="華方">
+          <p class="site-author-name" itemprop="name">華方</p>
+          <p class="site-description motion-element" itemprop="description">華方，兆火鳥也。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Hoofoo-WHU" target="_blank" title="GitHub" rel="external nofollow noopener noreferrer">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://coding.net/u/hoofoo" target="_blank" title="Coding" rel="external nofollow noopener noreferrer">
+                  
+                  Coding
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/ba543a06791e/timeline" target="_blank" title="简书" rel="external nofollow noopener noreferrer">
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#左右布局"><span class="nav-number">1.</span> <span class="nav-text">左右布局</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#按比例自适应布局"><span class="nav-number">1.1.</span> <span class="nav-text">按比例自适应布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#左固定宽度右自适应布局"><span class="nav-number">1.2.</span> <span class="nav-text">左固定宽度右自适应布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#左中右布局"><span class="nav-number">2.</span> <span class="nav-text">左中右布局</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#按比例自适应布局-1"><span class="nav-number">2.1.</span> <span class="nav-text">按比例自适应布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#左右固定中自适应布局"><span class="nav-number">2.2.</span> <span class="nav-text">左右固定中自适应布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#居中"><span class="nav-number">3.</span> <span class="nav-text">居中</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#水平居中"><span class="nav-number">3.1.</span> <span class="nav-text">水平居中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垂直居中"><span class="nav-number">3.2.</span> <span class="nav-text">垂直居中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#水平垂直都居中"><span class="nav-number">3.3.</span> <span class="nav-text">水平垂直都居中</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS小技巧"><span class="nav-number">4.</span> <span class="nav-text">CSS小技巧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-cloud"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">華方</span>
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">
+    NexT
+  </a>
+</div>
+
+<div class="blogrolls">
+  <a class="blogrolls-link" href="/blogrolls">友情链接</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("voqcQzWBmN1PdHl2yhOvDbR0-gzGzoHsz", "t78z9ML7GYBHwdvmjuFWTpN3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  
+
+</body>
+</html>

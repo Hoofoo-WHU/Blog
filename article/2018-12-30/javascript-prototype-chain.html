@@ -1,0 +1,834 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="152x152">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="120x120">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="76x76">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="60x60">
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="AUsnpJKRCE">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="前端,JavaScript,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hoofoo's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/favicon-32.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="JavaScript在某种程度上算是一门简单的语言，因为不包含复杂的继承机制，那么JavaScript是怎么实现共用属性的呢？答案就是原型链。">
+<meta name="keywords" content="前端,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中的原型与原型链">
+<meta property="og:url" content="http://hoofoo-whu.github.io/article/2018-12-30/javascript-prototype-chain.html">
+<meta property="og:site_name" content="Hoofoo&#39;s Blog">
+<meta property="og:description" content="JavaScript在某种程度上算是一门简单的语言，因为不包含复杂的继承机制，那么JavaScript是怎么实现共用属性的呢？答案就是原型链。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-29T10:16:15.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript中的原型与原型链">
+<meta name="twitter:description" content="JavaScript在某种程度上算是一门简单的语言，因为不包含复杂的继承机制，那么JavaScript是怎么实现共用属性的呢？答案就是原型链。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://hoofoo-whu.github.io/article/2018-12-30/javascript-prototype-chain.html">
+ 
+
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+
+  <title> JavaScript中的原型与原型链 | Hoofoo's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      
+      <span class="site-title">Hoofoo's Blog</span>
+      
+    </a>
+  </div>
+  <p class="site-subtitle">華方，兆火鳥也。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript中的原型与原型链
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+            <span class="post-meta-item-text"></span>
+            <time itemprop="dateCreated" datetime="2018-12-30T00:13:50+00:00" content="2018-12-30">
+              2018-12-30
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+
+
+          
+
+          
+          
+             <span id="/article/2018-12-30/javascript-prototype-chain.html" class="leancloud_visitors" data-flag-title="JavaScript中的原型与原型链">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">热度</span>
+               <span class="leancloud-visitors-count"></span>
+               ℃
+
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JavaScript在某种程度上算是一门简单的语言，因为不包含复杂的继承机制，那么JavaScript是怎么实现共用属性的呢？答案就是原型链。<br><a id="more"></a></p>
+<h1 id="堆中的对象与垃圾回收"><a href="#堆中的对象与垃圾回收" class="headerlink" title="堆中的对象与垃圾回收"></a>堆中的对象与垃圾回收</h1><h2 id="堆中的对象"><a href="#堆中的对象" class="headerlink" title="堆中的对象"></a>堆中的对象</h2><p>众所周知，对象是存在堆中的，JavaScript中除基本类型以外都是对象，其中也包含了数组与函数，所以构造函数也是作为一个函数对象存储在堆中的，而构造函数的变量只是一个引用被存放在window或者global变量对象中，所以我们可以直接使用Object、Boolean、String等构造函数。我们自己new的对象也是存在于堆中的。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;<span class="attr">name</span>: <span class="string">'a'</span>&#125;</span><br><span class="line"><span class="keyword">let</span> b = a</span><br><span class="line">b.name = <span class="string">'b'</span></span><br><span class="line">a.name <span class="comment">// 'a'</span></span><br></pre></td></tr></table></figure></p>
+<p>修改b的name时a的name也会被修改，这个例子也可以充分的说明，当我们在操作对象时只是在操作一个对象的引用，如果想要复制一个变量就需要涉及到<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" rel="external nofollow noopener noreferrer" target="_blank">深拷贝</a>了。</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>垃圾回收（Garbage Collection），简称GC，直译为垃圾收集，很容易将其理解为将用不到的内存收集起来，而实际是相反的，他是将有用的内存做标记，因为当出现循环引用时会引用计数不会将其判断为垃圾，这将会导致内存泄漏，Python中就是使用的这种GC机制，需要弱引用的机制来解决此问题，而JavaScript类似Java中的GC机制，不存在此问题，我们只需要知道当一个堆内对象失去引用的时候，GC引擎就会在适当的时候清除掉。</p>
+<h1 id="原型（Prototype）"><a href="#原型（Prototype）" class="headerlink" title="原型（Prototype）"></a>原型（Prototype）</h1><p>JavaScript中没有复杂的继承机制，然而当我们新建一个空对象时他是怎么存在对象自带的函数的呢？我们只需要在控制台中打印出来就看到了。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = &#123;&#125;</span><br><span class="line">a</span><br><span class="line"><span class="comment">// &#123;&#125;</span></span><br><span class="line"><span class="comment">//   __proto__:</span></span><br><span class="line"><span class="comment">//   constructor: ƒ Object()</span></span><br><span class="line"><span class="comment">//   hasOwnProperty: ƒ hasOwnProperty()</span></span><br><span class="line"><span class="comment">//   isPrototypeOf: ƒ isPrototypeOf()</span></span><br><span class="line"><span class="comment">//   propertyIsEnumerable: ƒ propertyIsEnumerable()</span></span><br><span class="line"><span class="comment">//   toLocaleString: ƒ toLocaleString()</span></span><br><span class="line"><span class="comment">//   toString: ƒ toString()</span></span><br><span class="line"><span class="comment">//   valueOf: ƒ valueOf()</span></span><br><span class="line"><span class="comment">//   __defineGetter__: ƒ __defineGetter__()</span></span><br><span class="line"><span class="comment">//   __defineSetter__: ƒ __defineSetter__()</span></span><br><span class="line"><span class="comment">//   __lookupGetter__: ƒ __lookupGetter__()</span></span><br><span class="line"><span class="comment">//   __lookupSetter__: ƒ __lookupSetter__()</span></span><br><span class="line"><span class="comment">//   get __proto__: ƒ __proto__()</span></span><br><span class="line"><span class="comment">//   set __proto__: ƒ __proto__()</span></span><br></pre></td></tr></table></figure></p>
+<p>我们可以看到所有的函数都被存在了一个名为<strong>proto</strong>的引用中，这就是JavaScript中提取共用属性的方法，我们将他称为原型（Prototype），既然对象的原型是一个对象他就必然要存在堆内存中，如果没有对象引用就必然会被GC回收，为了防止被GC回收，对象的原型在引擎进行初始化时默认被添加在了构造函数的prototype属性上。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&#123;&#125;).__proto__ === <span class="built_in">Object</span>.prototype <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<p>构造函数作为一个函数对象，它的<strong>proto</strong>指向Function.prototype<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Obejct.__proto__ === <span class="built_in">Function</span>.prototype <span class="comment">// true</span></span><br><span class="line"><span class="built_in">Function</span>.__proto__ === <span class="built_in">Function</span>.prototype <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<p>Object作为根节点比较特殊，它的prototype.<strong>proto</strong>为空<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span> <span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="原型链（Prototype-Chain）"><a href="#原型链（Prototype-Chain）" class="headerlink" title="原型链（Prototype Chain）"></a>原型链（Prototype Chain）</h1><p>原型解决了属性共用的问题，我们在每个对象中都可以使用Object的属性，如果我们需要对共用属性进行扩展但又不想影响Object的原型怎么办呢？当我们打印出一个Boolean对象时就一切真相大白了。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Boolean</span></span><br><span class="line"><span class="comment">// Boolean &#123;false&#125;</span></span><br><span class="line"><span class="comment">//   __proto__: Boolean</span></span><br><span class="line"><span class="comment">//   constructor: ƒ Boolean()</span></span><br><span class="line"><span class="comment">//   toString: ƒ toString()</span></span><br><span class="line"><span class="comment">//   valueOf: ƒ valueOf()</span></span><br><span class="line"><span class="comment">//   __proto__: Object</span></span><br><span class="line"><span class="comment">//   [[PrimitiveValue]]: false</span></span><br><span class="line"><span class="comment">// [[PrimitiveValue]]: false</span></span><br></pre></td></tr></table></figure></p>
+<p>可见一个Boolean对象的<strong>proto</strong>是Boolean原型，而Boolean原型的<strong>proto</strong>为Object原型，这就构成了一个链式结构，我们将其称为原型链。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">false</span>.__proto__ === <span class="built_in">Boolean</span>.prototype</span><br><span class="line"><span class="literal">false</span>.__proto__.__proto__ === <span class="built_in">Object</span>.prototype</span><br></pre></td></tr></table></figure></p>
+<p>::: tip 提示<br>上例中我们直接调用了基本类型的属性，基本类型在JavaScript中虽然不是对象，但是当进行对象操作时，会在堆中申请一个临时对象，此时就可以使用对应的属性了，但此临时对象在调用完后就会被清除，所以我们对其进行赋值操作是不生效的。<br>:::<br>当我们调用对象的一个属性或方法时，如果该对象没有就会像上查找其原型，如果直到Object原型都没有就会返回undefined。</p>
+<h1 id="new操作发生了什么"><a href="#new操作发生了什么" class="headerlink" title="new操作发生了什么"></a>new操作发生了什么</h1><p>当我们进行new一个对象的时候，发生了以下事情：</p>
+<ol>
+<li>申请一个新的空对象</li>
+<li>将新对象的<strong>proto</strong>指向构造函数的prototype</li>
+<li>对新对象执行构造函数</li>
+<li>return 新对象</li>
+</ol>
+<p>我们可以用一个函数来模拟这个过程，此方法可以构造对象，但是基础数据类型的实例使用此方法构造会出现数据类型不符的问题。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_new</span> (<span class="params">constructor,...arg</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> res = &#123;&#125;</span><br><span class="line">  res.__proto__ = <span class="keyword">constructor</span>.prototype</span><br><span class="line">  <span class="keyword">constructor</span>.apply(res, arg)</span><br><span class="line">  return  res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+        
+        	<br>
+          <blockquote><p>本文链接：<a href="/article/2018-12-30/javascript-prototype-chain.html" target="_blank">JavaScript中的原型与原型链</a><br>版权声明：本文章采用<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" rel="external nofollow noopener noreferrer">CC BY-NC-SA 3.0 CN</a>许可协议进行许可。转载请注明出处！</p>
+          </blockquote>
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/JavaScript/" rel="tag">#JavaScript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/article/2018-12-29/javascript-datatypes.html" rel="next" title="JavaScrit中的数据类型">
+                <i class="fa fa-chevron-left"></i> JavaScrit中的数据类型
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/article/2019-01-10/qiniu-to-tencentcloud.html" rel="prev" title="将图片从七牛云迁移到腾讯云">
+                将图片从七牛云迁移到腾讯云 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="gitalk-container"></div>
+      <script>
+        (function (){
+          function render(){
+            var gitalk = new Gitalk({
+              clientID: "c15a3993cd6aa1ef4b76",
+              clientSecret: "496f1466f3780b6543b7c8da95b15ef51752f0d5",
+              repo: "hoofoo-whu.github.io",
+              owner: "Hoofoo-WHU",
+              admin: ["Hoofoo-WHU"],
+              id: "article/2018-12-30/javascript-prototype-chain.html",      // Ensure uniqueness and length less than 50
+              distractionFreeMode: false  // Facebook-like distraction free mode
+            })
+            gitalk.render('gitalk-container')
+          }
+          window.addEventListener('load', render)
+        })()
+      </script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/hoofoo-avatar.png" alt="華方">
+          <p class="site-author-name" itemprop="name">華方</p>
+          <p class="site-description motion-element" itemprop="description">華方，兆火鳥也。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Hoofoo-WHU" target="_blank" title="GitHub" rel="external nofollow noopener noreferrer">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://coding.net/u/hoofoo" target="_blank" title="Coding" rel="external nofollow noopener noreferrer">
+                  
+                  Coding
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/ba543a06791e/timeline" target="_blank" title="简书" rel="external nofollow noopener noreferrer">
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#堆中的对象与垃圾回收"><span class="nav-number">1.</span> <span class="nav-text">堆中的对象与垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆中的对象"><span class="nav-number">1.1.</span> <span class="nav-text">堆中的对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收"><span class="nav-number">1.2.</span> <span class="nav-text">垃圾回收</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原型（Prototype）"><span class="nav-number">2.</span> <span class="nav-text">原型（Prototype）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原型链（Prototype-Chain）"><span class="nav-number">3.</span> <span class="nav-text">原型链（Prototype Chain）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new操作发生了什么"><span class="nav-number">4.</span> <span class="nav-text">new操作发生了什么</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-cloud"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">華方</span>
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">
+    NexT
+  </a>
+</div>
+
+<div class="blogrolls">
+  <a class="blogrolls-link" href="/blogrolls">友情链接</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("voqcQzWBmN1PdHl2yhOvDbR0-gzGzoHsz", "t78z9ML7GYBHwdvmjuFWTpN3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  
+
+</body>
+</html>

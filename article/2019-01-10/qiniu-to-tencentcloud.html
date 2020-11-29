@@ -1,0 +1,833 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="152x152">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="120x120">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="76x76">
+<link rel="apple-touch-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/apple-icon.png" sizes="60x60">
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="AUsnpJKRCE">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="七牛云,腾讯云,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hoofoo's Blog" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/favicon-32.ico?v=5.0.1">
+
+
+
+
+
+
+<meta name="description" content="在我的博客没更新的这一年里，我曾经吹爆的七牛云将测试域名期限修改成了一个月，这导致我的博客里的图片全部挂掉了，这个事情搁置了很久没去解决，趁着心气还在就动手把图片从七牛云迁移到了腾讯云，顺便把写在其他地方的几篇博客加进来，在此记录一下迁移的过程。">
+<meta name="keywords" content="七牛云,腾讯云">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将图片从七牛云迁移到腾讯云">
+<meta property="og:url" content="http://hoofoo-whu.github.io/article/2019-01-10/qiniu-to-tencentcloud.html">
+<meta property="og:site_name" content="Hoofoo&#39;s Blog">
+<meta property="og:description" content="在我的博客没更新的这一年里，我曾经吹爆的七牛云将测试域名期限修改成了一个月，这导致我的博客里的图片全部挂掉了，这个事情搁置了很久没去解决，趁着心气还在就动手把图片从七牛云迁移到了腾讯云，顺便把写在其他地方的几篇博客加进来，在此记录一下迁移的过程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-10-1547101135325.jpg">
+<meta property="og:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-10-063008.png">
+<meta property="og:updated_time" content="2020-11-29T10:16:15.242Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="将图片从七牛云迁移到腾讯云">
+<meta name="twitter:description" content="在我的博客没更新的这一年里，我曾经吹爆的七牛云将测试域名期限修改成了一个月，这导致我的博客里的图片全部挂掉了，这个事情搁置了很久没去解决，趁着心气还在就动手把图片从七牛云迁移到了腾讯云，顺便把写在其他地方的几篇博客加进来，在此记录一下迁移的过程。">
+<meta name="twitter:image" content="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-10-1547101135325.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://hoofoo-whu.github.io/article/2019-01-10/qiniu-to-tencentcloud.html">
+ 
+
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+
+
+  <title> 将图片从七牛云迁移到腾讯云 | Hoofoo's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/" class="brand" rel="start">
+      
+      <span class="site-title">Hoofoo's Blog</span>
+      
+    </a>
+  </div>
+  <p class="site-subtitle">華方，兆火鳥也。</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                将图片从七牛云迁移到腾讯云
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+           <span class="post-meta-item-icon">
+             <i class="fa fa-calendar-o"></i>
+           </span>
+            <span class="post-meta-item-text"></span>
+            <time itemprop="dateCreated" datetime="2019-01-10T12:45:30+00:00" content="2019-01-10">
+              2019-01-10
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Blog/" itemprop="url" rel="index">
+                    <span itemprop="name">Blog</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+
+
+          
+
+          
+          
+             <span id="/article/2019-01-10/qiniu-to-tencentcloud.html" class="leancloud_visitors" data-flag-title="将图片从七牛云迁移到腾讯云">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">热度</span>
+               <span class="leancloud-visitors-count"></span>
+               ℃
+
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在我的博客没更新的这一年里，我曾经吹爆的七牛云将测试域名期限修改成了一个月，这导致我的博客里的图片全部挂掉了，这个事情搁置了很久没去解决，趁着心气还在就动手把图片从七牛云迁移到了腾讯云，顺便把写在其他地方的几篇博客加进来，在此记录一下迁移的过程。<br><a id="more"></a></p>
+<h1 id="七牛云的处理"><a href="#七牛云的处理" class="headerlink" title="七牛云的处理"></a>七牛云的处理</h1><p>七牛云在测试域名过期之后，因为没有了链接，存储的图片都无法预览也无法下载下来，最好的解决方法就是要绑定一个备案的域名，可惜的是我的域名已经过期了，再说备案也是个麻烦事，不过还好还有其他的解决办法。</p>
+<h2 id="利用跨区域同步管理迁移到新存储空间"><a href="#利用跨区域同步管理迁移到新存储空间" class="headerlink" title="利用跨区域同步管理迁移到新存储空间"></a>利用跨区域同步管理迁移到新存储空间</h2><p>七牛云的测试域名过期时间是每个存储空间单独计算的，所以当新建一个存储空间的时候，新分配的域名还是可以下载存储的内容的，七牛提供了跨区同步管理的服务，我们新建一个其他区的存储空间<strong>image2</strong>，然后设置跨区域同步稍等片刻即可将以前存储的图片导入到新的存储空间，详细请看<a href="https://developer.qiniu.com/kodo/manual/1700/cross-regional-synchronization" rel="external nofollow noopener noreferrer" target="_blank">设置跨区域同步</a>，如果这种方法转移的比较慢也可以参考<a href="https://developer.qiniu.com/kodo/kb/1685/using-qshell-synchronize-directories" rel="external nofollow noopener noreferrer" target="_blank">使用 qshell 同步目录</a>。</p>
+<h2 id="使用Qshell批量下载图片"><a href="#使用Qshell批量下载图片" class="headerlink" title="使用Qshell批量下载图片"></a>使用Qshell批量下载图片</h2><p>虽然图片转移到了新仓库可以下载了，但是只能一张张的下，如果图片比较多的话就很恼火，<a href="https://developer.qiniu.com/kodo/tools/1302/qshell" rel="external nofollow noopener noreferrer" target="_blank">Qshell</a>是七牛提供的命令行工具，提供了批量下载的功能。</p>
+<p>首先按照文档给的<a href="http://devtools.qiniu.com/qshell-v2.3.5.zip" rel="external nofollow noopener noreferrer" target="_blank">下载地址</a>下载Qshell，我是Mac就使用其中的<code>qshell_darwin_x64</code>，因为是临时使用就不配置环境变量了，直接在当前目录运行，如果失败的话给其添加运行权限即可</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod +x qshell_darwin_x64</span><br></pre></td></tr></table></figure>
+<p>然后设置账户<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./qshell_darwin_x64 account &lt;AccessKey&gt; &lt;SecretKey&gt; &lt;Name&gt;</span><br></pre></td></tr></table></figure></p>
+<p>秘钥在<code>个人中心&gt;秘钥管理</code>中查看，Name随便写一个就可以，只是本地为了方便切换账户用的</p>
+<p>编写下载配置文件<code>download.json</code>，根据自己的情况自行修改<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"dest_dir"</span>: <span class="string">"&lt;下载到的文件夹绝对路径&gt;"</span>,</span><br><span class="line">    <span class="attr">"bucket"</span>: <span class="string">"&lt;存储空间名&gt;"</span>,</span><br><span class="line">    <span class="attr">"cdn_domain"</span>: <span class="string">"&lt;图床的地址&gt;"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>运行下载命令即可看到图片批量下载完毕<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./qshell_darwin_x64 qdownload download.json</span><br></pre></td></tr></table></figure></p>
+<p>其余情况查看<a href="https://github.com/qiniu/qshell/blob/master/docs/qdownload.md" rel="external nofollow noopener noreferrer" target="_blank">qdownload官方文档</a></p>
+<h1 id="腾讯云的处理"><a href="#腾讯云的处理" class="headerlink" title="腾讯云的处理"></a>腾讯云的处理</h1><p>腾讯云这边的操作比较简单，只需要新建对象存储服务，上传图片申请秘钥即可</p>
+<h2 id="创建存储桶"><a href="#创建存储桶" class="headerlink" title="创建存储桶"></a>创建存储桶</h2><p>这一步选择公有读私有写，比较符合博客的需求<br><img src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-10-1547101135325.jpg" alt="创建存储桶"><br>存储桶创建完成直接把刚下载好的图片上传上去就可以使用了，因为图片的名字都没有改，所以直接把博文的链接修改成腾讯云的前缀就可以了，我的博文并不是很多，所以直接手动用编辑器替换了，如果比较多可以考虑写一个脚本批量替换</p>
+<h2 id="设置防盗链"><a href="#设置防盗链" class="headerlink" title="设置防盗链"></a>设置防盗链</h2><p>腾讯云提供了防盗链的功能，将博客域名加入白名单即可，不过我不推荐这么做，因为在写博客的时候图片就无法预览了，很不方便<br><img src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/2019-01-10-063008.png" alt="设置防盗链"></p>
+<h1 id="iPic上传图片"><a href="#iPic上传图片" class="headerlink" title="iPic上传图片"></a>iPic上传图片</h1><p><a href="https://toolinbox.net/iPic/" rel="external nofollow noopener noreferrer" target="_blank">iPic</a>是一个快捷上传图片到图床的软件，还可以直接复制为markdown链接，在Mac版<a href="https://typora.io" rel="external nofollow noopener noreferrer" target="_blank">Typora</a>中还可以设置自动使用iPic上传，写起博客来非常方便。</p>
+
+        
+        	<br>
+          <blockquote><p>本文链接：<a href="/article/2019-01-10/qiniu-to-tencentcloud.html" target="_blank">将图片从七牛云迁移到腾讯云</a><br>版权声明：本文章采用<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" rel="external nofollow noopener noreferrer">CC BY-NC-SA 3.0 CN</a>许可协议进行许可。转载请注明出处！</p>
+          </blockquote>
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/七牛云/" rel="tag">#七牛云</a>
+          
+            <a href="/tags/腾讯云/" rel="tag">#腾讯云</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/article/2018-12-30/javascript-prototype-chain.html" rel="next" title="JavaScript中的原型与原型链">
+                <i class="fa fa-chevron-left"></i> JavaScript中的原型与原型链
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/article/2019-01-15/解决overflow在flex和grid布局中失效.html" rel="prev" title="解决overflow在flex和grid布局中失效">
+                解决overflow在flex和grid布局中失效 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="gitalk-container"></div>
+      <script>
+        (function (){
+          function render(){
+            var gitalk = new Gitalk({
+              clientID: "c15a3993cd6aa1ef4b76",
+              clientSecret: "496f1466f3780b6543b7c8da95b15ef51752f0d5",
+              repo: "hoofoo-whu.github.io",
+              owner: "Hoofoo-WHU",
+              admin: ["Hoofoo-WHU"],
+              id: "article/2019-01-10/qiniu-to-tencentcloud.html",      // Ensure uniqueness and length less than 50
+              distractionFreeMode: false  // Facebook-like distraction free mode
+            })
+            gitalk.render('gitalk-container')
+          }
+          window.addEventListener('load', render)
+        })()
+      </script>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://image-1256107964.cos.ap-beijing.myqcloud.com/blog/hoofoo-avatar.png" alt="華方">
+          <p class="site-author-name" itemprop="name">華方</p>
+          <p class="site-description motion-element" itemprop="description">華方，兆火鳥也。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Hoofoo-WHU" target="_blank" title="GitHub" rel="external nofollow noopener noreferrer">
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://coding.net/u/hoofoo" target="_blank" title="Coding" rel="external nofollow noopener noreferrer">
+                  
+                  Coding
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/users/ba543a06791e/timeline" target="_blank" title="简书" rel="external nofollow noopener noreferrer">
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#七牛云的处理"><span class="nav-number">1.</span> <span class="nav-text">七牛云的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#利用跨区域同步管理迁移到新存储空间"><span class="nav-number">1.1.</span> <span class="nav-text">利用跨区域同步管理迁移到新存储空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Qshell批量下载图片"><span class="nav-number">1.2.</span> <span class="nav-text">使用Qshell批量下载图片</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#腾讯云的处理"><span class="nav-number">2.</span> <span class="nav-text">腾讯云的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建存储桶"><span class="nav-number">2.1.</span> <span class="nav-text">创建存储桶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置防盗链"><span class="nav-number">2.2.</span> <span class="nav-text">设置防盗链</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iPic上传图片"><span class="nav-number">3.</span> <span class="nav-text">iPic上传图片</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-cloud"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">華方</span>
+</div>
+
+<div class="powered-by">
+  Power by <a class="theme-link" href="https://hexo.io" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> 
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" rel="external nofollow noopener noreferrer" target="_blank">
+    NexT
+  </a>
+</div>
+
+<div class="blogrolls">
+  <a class="blogrolls-link" href="/blogrolls">友情链接</a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("voqcQzWBmN1PdHl2yhOvDbR0-gzGzoHsz", "t78z9ML7GYBHwdvmjuFWTpN3");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+  
+
+</body>
+</html>
